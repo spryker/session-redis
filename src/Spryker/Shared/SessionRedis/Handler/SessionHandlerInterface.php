@@ -37,7 +37,7 @@ interface SessionHandlerInterface
     public function open(string $savePath, string $name): bool;
 
     /**
-     * @param string $sessionId The session id to read data for.
+     * @param string $sessionId
      *
      * @return string
      */
