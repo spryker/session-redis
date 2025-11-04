@@ -137,7 +137,10 @@ class SessionRedisConfig extends AbstractBundleConfig
      */
     public function getSessionRedisLockingExcludedUrlPatterns(): array
     {
-        return [];
+        return [
+            '/^.*\/error-page\/*.*$/',
+            '/^.*\/health-check$/',
+        ];
     }
 
     /**
@@ -151,7 +154,33 @@ class SessionRedisConfig extends AbstractBundleConfig
      */
     public function getSessionRedisLockingExcludedBotUserAgents(): array
     {
-        return [];
+        return [
+            'Googlebot',
+            'bingbot',
+            'Baiduspider',
+            'YandexBot',
+            'DuckDuckBot',
+            'Sogou',
+            'ia_archiver',
+            'facebookexternalhit',
+            'Twitterbot',
+            'LinkedInBot',
+            'Slackbot',
+            'WhatsApp',
+            'Discordbot',
+            'AhrefsBot',
+            'Applebot',
+            'msnbot',
+            'MJ12bot',
+            'SEMrushBot',
+            'PetalBot',
+            'SeznamBot',
+            'AdsBot-Google',
+            'crawler',
+            'spider',
+            'robot',
+            'bot/',
+        ];
     }
 
     /**

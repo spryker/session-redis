@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Unit\Spryker\Yves\SessionRedis\Plugin\SessionRedisLockingExclusion;
+namespace SprykerTest\Yves\SessionRedis\Plugin\SessionRedisLockingExclusion;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer;
@@ -19,8 +19,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * Auto-generated group annotations
  *
- * @group Unit
- * @group Spryker
+ * @group SprykerTest
  * @group Yves
  * @group SessionRedis
  * @group Plugin
