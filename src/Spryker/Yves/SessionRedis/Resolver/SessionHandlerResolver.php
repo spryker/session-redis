@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer;
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class SessionHandlerResolver implements SessionHandlerResolverInterface
@@ -51,10 +52,7 @@ class SessionHandlerResolver implements SessionHandlerResolverInterface
      */
     protected function createRedisLockingSessionHandlerConditionTransfer(): RedisLockingSessionHandlerConditionTransfer
     {
-        $request = $this->requestStack->getCurrentRequest();
-        if ($request === null) {
-            return (new RedisLockingSessionHandlerConditionTransfer());
-        }
+        $request = $this->requestStack->getCurrentRequest() ?? Request::createFromGlobals();
 
         return (new RedisLockingSessionHandlerConditionTransfer())
             ->setRequestUri($request->getRequestUri())
