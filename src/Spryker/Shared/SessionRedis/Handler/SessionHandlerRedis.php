@@ -15,6 +15,8 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerRedis implements SessionHandlerInterface
 {
+    use SessionDataNormalizerTrait;
+
     /**
      * @var string
      */
@@ -106,14 +108,9 @@ class SessionHandlerRedis implements SessionHandlerInterface
         $key = $this->buildSessionKey($sessionId);
         $startTime = microtime(true);
         $result = $this->redisClient->get($key);
-        $decodedResult = null;
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        if ($result) {
-            $decodedResult = json_decode($result, true);
-        }
-
-        return $decodedResult ?? '';
+        return $this->normalizeSessionData($result);
     }
 
     /**

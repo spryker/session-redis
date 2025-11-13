@@ -16,6 +16,8 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
+    use SessionDataNormalizerTrait;
+
     /**
      * @var string
      */
@@ -148,39 +150,5 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     public function gc($maxLifeTime): bool
     {
         return true;
-    }
-
-    /**
-     * @param string|null $sessionData
-     *
-     * @return string
-     */
-    protected function normalizeSessionData(?string $sessionData = null): string
-    {
-        if (!$sessionData) {
-            return '';
-        }
-
-        $sessionData = $this->tryDecodeLegacySession($sessionData);
-
-        if ($sessionData === null) {
-            return '';
-        }
-
-        return $sessionData;
-    }
-
-    /**
-     * @param string $sessionData
-     *
-     * @return string|null
-     */
-    protected function tryDecodeLegacySession(string $sessionData): ?string
-    {
-        if (substr($sessionData, 0, 1) === '"') {
-            return json_decode($sessionData, true);
-        }
-
-        return $sessionData;
     }
 }
