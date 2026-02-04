@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SessionEntityRequestTransfer;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
-use Spryker\Shared\SessionRedis\Hasher\BcryptHasher;
+use Spryker\Shared\SessionRedis\Hasher\Md5Hasher;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Shared\SessionRedis\Saver\SessionEntitySaver;
 
@@ -68,7 +68,7 @@ class SessionEntitySaverTest extends Unit
         $sessionEntitySaver = new SessionEntitySaver(
             $sessionRedisWrapperMock,
             $this->createSessionRedisLifeTimeCalculatorMock(static::TEST_SESSION_LIFETIME),
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         );
 
@@ -95,7 +95,7 @@ class SessionEntitySaverTest extends Unit
         $sessionEntitySaver = new SessionEntitySaver(
             $sessionRedisWrapperMock,
             $this->createSessionRedisLifeTimeCalculatorMock(static::TEST_SESSION_LIFETIME),
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         );
 

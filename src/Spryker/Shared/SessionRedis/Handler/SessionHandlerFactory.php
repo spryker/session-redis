@@ -14,8 +14,8 @@ use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
-use Spryker\Shared\SessionRedis\Hasher\BcryptHasher;
 use Spryker\Shared\SessionRedis\Hasher\HasherInterface;
+use Spryker\Shared\SessionRedis\Hasher\Md5Hasher;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerFactory implements SessionHandlerFactoryInterface
@@ -179,6 +179,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
      */
     public function createHasher(): HasherInterface
     {
-        return new BcryptHasher();
+        return new Md5Hasher();
     }
 }

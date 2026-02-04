@@ -12,8 +12,8 @@ use Spryker\Shared\SessionRedis\Handler\AbstractSessionAccountHandlerRedis;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
-use Spryker\Shared\SessionRedis\Hasher\BcryptHasher;
 use Spryker\Shared\SessionRedis\Hasher\HasherInterface;
+use Spryker\Shared\SessionRedis\Hasher\Md5Hasher;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 /**
@@ -77,7 +77,7 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $result = $this->createSessionAccountHandler(
             $redisClient,
             $sessionLifetime,
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         )->isSessionAccountValid($idAccount, $idSession);
 
@@ -98,13 +98,13 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $redisClient->expects(static::once())->method('get')
             ->with(
                 "{$idAccount}:account_type:account",
-            )->willReturn('$2y$10$ERml.felur5NSFjFxgUl.uj4.QuMBl/Qx/bAtEqwy7LAKFksXGhpK');
+            )->willReturn('128d37d5504563706ae60f40c871748d');
 
         // Action
         $result = $this->createSessionAccountHandler(
             $redisClient,
             $sessionLifetime,
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         )->isSessionAccountValid($idAccount, $idSession);
 
@@ -131,7 +131,7 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $result = $this->createSessionAccountHandler(
             $redisClient,
             $sessionLifetime,
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         )->isSessionAccountValid($idAccount, $idSession);
 

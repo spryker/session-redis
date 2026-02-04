@@ -10,7 +10,7 @@ namespace SprykerTest\Shared\SessionRedis\Validator;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SessionEntityRequestTransfer;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
-use Spryker\Shared\SessionRedis\Hasher\BcryptHasher;
+use Spryker\Shared\SessionRedis\Hasher\Md5Hasher;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Shared\SessionRedis\Validator\SessionEntityValidator;
 
@@ -58,7 +58,7 @@ class SessionEntityValidatorTest extends Unit
 
         $sessionEntityValidator = new SessionEntityValidator(
             $sessionRedisWrapperMock,
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         );
 
@@ -84,7 +84,7 @@ class SessionEntityValidatorTest extends Unit
 
         $sessionEntityValidator = new SessionEntityValidator(
             $sessionRedisWrapperMock,
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         );
 
@@ -106,11 +106,11 @@ class SessionEntityValidatorTest extends Unit
         $sessionRedisWrapperMock = $this->createSessionRedisWrapperMock();
         $sessionRedisWrapperMock->method('get')
             ->with($this->buildSessionEntityKey($sessionEntityRequestTransfer))
-            ->willReturn('$2y$10$k0g/od6o0WlDguvaBoQGe.vG2Ersfap5ZX8DhD6BMAZFOSvE7HHkG');
+            ->willReturn('22f5832147f5650c6a1a999fbd97695d');
 
         $sessionEntityValidator = new SessionEntityValidator(
             $sessionRedisWrapperMock,
-            new BcryptHasher(),
+            new Md5Hasher(),
             new SessionKeyBuilder(),
         );
 

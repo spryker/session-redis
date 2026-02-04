@@ -17,8 +17,8 @@ use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorI
 use Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
-use Spryker\Shared\SessionRedis\Hasher\BcryptHasher;
 use Spryker\Shared\SessionRedis\Hasher\HasherInterface;
+use Spryker\Shared\SessionRedis\Hasher\Md5Hasher;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Shared\SessionRedis\Saver\SessionEntitySaver;
@@ -66,7 +66,7 @@ class SessionRedisFactory extends AbstractFactory
         return new SessionEntitySaver(
             $this->createSessionRedisWrapper(),
             $this->createSessionRedisLifeTimeCalculator(),
-            $this->createBcryptHasher(),
+            $this->createMd5Hasher(),
             $this->createSessionKeyBuilder(),
         );
     }
@@ -78,7 +78,7 @@ class SessionRedisFactory extends AbstractFactory
     {
         return new SessionEntityValidator(
             $this->createSessionRedisWrapper(),
-            $this->createBcryptHasher(),
+            $this->createMd5Hasher(),
             $this->createSessionKeyBuilder(),
         );
     }
@@ -91,12 +91,9 @@ class SessionRedisFactory extends AbstractFactory
         return new SessionKeyBuilder();
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Hasher\HasherInterface
-     */
-    public function createBcryptHasher(): HasherInterface
+    public function createMd5Hasher(): HasherInterface
     {
-        return new BcryptHasher();
+        return new Md5Hasher();
     }
 
     /**
