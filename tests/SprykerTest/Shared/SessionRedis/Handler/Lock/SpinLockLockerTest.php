@@ -54,7 +54,7 @@ class SpinLockLockerTest extends Unit
         $this->redisClientMock->expects($this->exactly(3))
             ->method('set')
             ->with($this->anything())
-            ->will($this->onConsecutiveCalls(false, false, true));
+            ->willReturnOnConsecutiveCalls(false, false, true);
 
         $this->spinLockLocker->lock('session_id');
     }
