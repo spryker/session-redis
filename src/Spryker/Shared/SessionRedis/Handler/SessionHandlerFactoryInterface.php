@@ -14,50 +14,17 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 interface SessionHandlerFactoryInterface
 {
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \SessionHandlerInterface
-     */
     public function createSessionRedisHandler(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
-     */
     public function createSessionCustomerRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
-     */
     public function createSessionUserRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerRedisLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerRedisWriteOnlyLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
-     */
     public function createSessionSpinLockLocker(SessionRedisWrapperInterface $redisClient): SessionLockerInterface;
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
-     */
     public function createSessionKeyBuilder(): SessionKeyBuilderInterface;
 }

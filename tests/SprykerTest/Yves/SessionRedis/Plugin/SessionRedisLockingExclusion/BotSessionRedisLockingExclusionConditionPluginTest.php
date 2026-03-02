@@ -39,9 +39,6 @@ class BotSessionRedisLockingExclusionConditionPluginTest extends Unit
      */
     protected SessionRedisYvesTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -143,9 +140,6 @@ class BotSessionRedisLockingExclusionConditionPluginTest extends Unit
         $this->assertFalse($result, "Failed asserting that user agent '$userAgent' is recognized as a regular user");
     }
 
-    /**
-     * @return void
-     */
     public function testCheckConditionReturnsFalseWhenHeadersAreNotProvided(): void
     {
         // Arrange
@@ -158,9 +152,6 @@ class BotSessionRedisLockingExclusionConditionPluginTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCheckConditionReturnsFalseWhenUserAgentIsEmpty(): void
     {
         // Arrange
@@ -174,9 +165,6 @@ class BotSessionRedisLockingExclusionConditionPluginTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCheckConditionReturnsFalseWhenUserAgentHeaderIsMissing(): void
     {
         // Arrange

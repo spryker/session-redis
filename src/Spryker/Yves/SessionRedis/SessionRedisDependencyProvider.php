@@ -48,11 +48,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGINS_SESSION_REDIS_LOCKING_EXCLUSION_CONDITION = 'PLUGINS_CONFIGURABLE_REDIS_LOCKING_SESSION_HANDLER_CONDITION';
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
@@ -64,11 +59,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addRedisClient(Container $container): Container
     {
         $container->set(static::CLIENT_REDIS, function (Container $container) {
@@ -80,11 +70,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addMonitoringService(Container $container): Container
     {
         $container->set(static::SERVICE_MONITORING, function () use ($container) {
@@ -96,11 +81,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addRequestStack(Container $container): Container
     {
         $container->set(static::REQUEST_STACK, function (ContainerInterface $container) {
@@ -110,11 +90,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSessionRedisLifeTimeCalculatorPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR, function () {
@@ -124,11 +99,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addSessionRedisLockingExclusionConditionPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SESSION_REDIS_LOCKING_EXCLUSION_CONDITION, function () {

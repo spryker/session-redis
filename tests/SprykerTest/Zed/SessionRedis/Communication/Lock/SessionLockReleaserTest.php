@@ -40,9 +40,6 @@ class SessionLockReleaserTest extends Unit
      */
     protected $sessionLockReleaser;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -56,9 +53,6 @@ class SessionLockReleaserTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testReleaseReturnsEarlyWhenLockTokenIsEmpty(): void
     {
         $this->lockReaderMock
@@ -72,9 +66,6 @@ class SessionLockReleaserTest extends Unit
         $this->assertFalse($this->sessionLockReleaser->release('session_id'));
     }
 
-    /**
-     * @return void
-     */
     public function testReleaseUnlocksSessionDataWhenTokenIsNotEmpty(): void
     {
         $sessionId = 'session_id';
@@ -96,17 +87,11 @@ class SessionLockReleaserTest extends Unit
         $this->assertTrue($this->sessionLockReleaser->release($sessionId));
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionLockReaderMock(): void
     {
         $this->lockReaderMock = $this->createMock(SessionLockReaderInterface::class);
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionLockerMock(): void
     {
         $this->lockerMock = $this->createMock(SessionLockerInterface::class);

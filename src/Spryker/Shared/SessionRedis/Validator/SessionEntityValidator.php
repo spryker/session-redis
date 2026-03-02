@@ -30,11 +30,6 @@ class SessionEntityValidator implements SessionEntityValidatorInterface
      */
     protected SessionKeyBuilderInterface $keyBuilder;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Hasher\HasherInterface $hasher
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         HasherInterface $hasher,
@@ -45,11 +40,6 @@ class SessionEntityValidator implements SessionEntityValidatorInterface
         $this->keyBuilder = $keyBuilder;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SessionEntityResponseTransfer
-     */
     public function validate(SessionEntityRequestTransfer $sessionEntityRequestTransfer): SessionEntityResponseTransfer
     {
         $sessionEntityResponseTransfer = (new SessionEntityResponseTransfer())->setIsSuccessfull(true);

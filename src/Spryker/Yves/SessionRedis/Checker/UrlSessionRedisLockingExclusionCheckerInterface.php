@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer;
 
 interface UrlSessionRedisLockingExclusionCheckerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer $redisLockingSessionHandlerConditionTransfer
-     *
-     * @return bool
-     */
     public function checkCondition(RedisLockingSessionHandlerConditionTransfer $redisLockingSessionHandlerConditionTransfer): bool;
 }

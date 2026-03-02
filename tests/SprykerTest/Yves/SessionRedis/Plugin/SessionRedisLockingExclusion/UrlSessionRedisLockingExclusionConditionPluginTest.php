@@ -46,9 +46,6 @@ class UrlSessionRedisLockingExclusionConditionPluginTest extends Unit
      */
     protected SessionRedisYvesTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -125,9 +122,6 @@ class UrlSessionRedisLockingExclusionConditionPluginTest extends Unit
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testCheckConditionReturnsFalseWhenRequestUriIsEmpty(): void
     {
         // Arrange
@@ -145,9 +139,6 @@ class UrlSessionRedisLockingExclusionConditionPluginTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCheckConditionReturnsFalseWhenRequestUriIsNotProvided(): void
     {
         // Arrange
@@ -164,9 +155,6 @@ class UrlSessionRedisLockingExclusionConditionPluginTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testCheckConditionReturnsFalseWhenNoUrlPatternsAreConfigured(): void
     {
         // Arrange

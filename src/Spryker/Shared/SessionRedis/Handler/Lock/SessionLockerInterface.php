@@ -16,9 +16,6 @@ interface SessionLockerInterface
      */
     public function lock($sessionId): bool;
 
-    /**
-     * @return void
-     */
     public function unlockCurrent(): void;
 
     /**

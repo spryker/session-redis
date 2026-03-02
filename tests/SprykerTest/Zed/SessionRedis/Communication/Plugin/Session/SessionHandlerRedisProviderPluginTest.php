@@ -38,9 +38,6 @@ class SessionHandlerRedisProviderPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -49,25 +46,16 @@ class SessionHandlerRedisProviderPluginTest extends Unit
         $this->sessionHandlerPlugin = new SessionHandlerRedisProviderPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testHasCorrectSessionHandlerName(): void
     {
         $this->assertSame($this->getSharedConfig()->getSessionHandlerRedisName(), $this->sessionHandlerPlugin->getSessionHandlerName());
     }
 
-    /**
-     * @return void
-     */
     public function testPluginReturnsCorrectSessionHandler(): void
     {
         $this->assertInstanceOf(SessionHandlerRedis::class, $this->sessionHandlerPlugin->getSessionHandler());
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\SessionRedisConfig
-     */
     protected function getSharedConfig(): SessionRedisConfig
     {
         return new SessionRedisConfig();

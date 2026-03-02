@@ -36,12 +36,6 @@ class SessionEntitySaver implements SessionEntitySaverInterface
      */
     protected SessionKeyBuilderInterface $keyBuilder;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
-     * @param \Spryker\Shared\SessionRedis\Hasher\HasherInterface $hasher
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator,
@@ -54,11 +48,6 @@ class SessionEntitySaver implements SessionEntitySaverInterface
         $this->keyBuilder = $keyBuilder;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SessionEntityResponseTransfer
-     */
     public function save(SessionEntityRequestTransfer $sessionEntityRequestTransfer): SessionEntityResponseTransfer
     {
         $entityKey = $this->keyBuilder->buildEntityKey($sessionEntityRequestTransfer);

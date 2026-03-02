@@ -45,13 +45,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
      */
     protected $sessionRedisLifeTimeCalculator;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
-     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
-     * @param int $lockingTimeoutMilliseconds
-     * @param int $lockingRetryDelayMilliseconds
-     * @param int $lockingLockTtlMilliseconds
-     */
     public function __construct(
         SessionRedisToMonitoringServiceInterface $monitoringService,
         SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator,
@@ -66,11 +59,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         $this->lockingLockTtlMilliseconds = $lockingLockTtlMilliseconds;
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \SessionHandlerInterface
-     */
     public function createSessionRedisHandler(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
     {
         return new SessionHandlerRedis(
@@ -81,11 +69,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         );
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
-     */
     public function createSessionCustomerRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface
     {
         return new SessionCustomerHandlerRedis(
@@ -96,11 +79,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         );
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
-     */
     public function createSessionUserRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface
     {
         return new SessionUserHandlerRedis(
@@ -111,11 +89,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         );
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerRedisLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
     {
         return new SessionHandlerRedisLocking(
@@ -126,11 +99,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         );
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerRedisWriteOnlyLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
     {
         return new SessionHandlerRedisWriteOnlyLocking(
@@ -142,11 +110,6 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         );
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
-     */
     public function createSessionSpinLockLocker(SessionRedisWrapperInterface $redisClient): SessionLockerInterface
     {
         return new SessionSpinLockLocker(
@@ -166,17 +129,11 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
         return [];
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
-     */
     public function createSessionKeyBuilder(): SessionKeyBuilderInterface
     {
         return new SessionKeyBuilder();
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Hasher\HasherInterface
-     */
     public function createHasher(): HasherInterface
     {
         return new Md5Hasher();

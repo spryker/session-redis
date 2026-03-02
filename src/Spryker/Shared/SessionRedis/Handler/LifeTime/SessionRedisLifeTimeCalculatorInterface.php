@@ -9,8 +9,5 @@ namespace Spryker\Shared\SessionRedis\Handler\LifeTime;
 
 interface SessionRedisLifeTimeCalculatorInterface
 {
-    /**
-     * @return int
-     */
     public function getSessionLifeTime(): int;
 }

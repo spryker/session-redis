@@ -51,9 +51,6 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
      */
     protected $sessionRedisLifeTimeCalculatorMock;
 
-    /**
-     * @return void
-     */
     public function testReadShouldNotLockSession(): void
     {
         $this->redisClientMock
@@ -72,9 +69,6 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -85,9 +79,6 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
         $this->setupSessionHandlerRedisWriteOnlyLocking();
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisClientMock(): void
     {
         $this->redisClientMock = $this
@@ -95,9 +86,6 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionHandlerRedisWriteOnlyLocking(): void
     {
         $this->sessionHandler = new SessionHandlerRedisWriteOnlyLocking(
@@ -109,9 +97,6 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisSpinLockLockerMock(): void
     {
         $this->spinLockLockerMock = $this
@@ -120,9 +105,6 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionRedisLifeTimeCalculatorMock(): void
     {
         $this->sessionRedisLifeTimeCalculatorMock = $this->getMockBuilder(SessionRedisLifeTimeCalculator::class)

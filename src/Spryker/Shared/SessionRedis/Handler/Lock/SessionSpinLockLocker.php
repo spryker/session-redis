@@ -82,13 +82,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
      */
     protected $isLocked = false;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     * @param int|null $timeoutMilliseconds
-     * @param int|null $retryDelayMicroseconds
-     * @param int|null $lockTtlMilliseconds
-     */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionKeyBuilderInterface $keyBuilder,
@@ -116,9 +109,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
         return $this->waitForLock();
     }
 
-    /**
-     * @return void
-     */
     public function unlockCurrent(): void
     {
         if (!$this->isLocked) {
@@ -152,11 +142,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
             );
     }
 
-    /**
-     * @param int|null $timeoutMilliseconds
-     *
-     * @return int
-     */
     protected function getTimeoutMilliseconds(?int $timeoutMilliseconds): int
     {
         if ($timeoutMilliseconds) {
@@ -166,11 +151,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
         return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_TIMEOUT_MILLISECONDS, 0.8);
     }
 
-    /**
-     * @param int|null $lockTtlMilliseconds
-     *
-     * @return int
-     */
     protected function getLockTtlMilliseconds(?int $lockTtlMilliseconds): int
     {
         if ($lockTtlMilliseconds) {
@@ -180,12 +160,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
         return $this->getMillisecondsFromMaxExecutionTime(static::DEFAULT_LOCK_TTL_MILLISECONDS);
     }
 
-    /**
-     * @param int $defaultMilliseconds
-     * @param float $fraction
-     *
-     * @return int
-     */
     protected function getMillisecondsFromMaxExecutionTime(int $defaultMilliseconds, float $fraction = 1.0): int
     {
         $maxExecutionTime = (int)round((int)ini_get('max_execution_time') * $fraction);
@@ -197,17 +171,11 @@ class SessionSpinLockLocker implements SessionLockerInterface
         return $defaultMilliseconds;
     }
 
-    /**
-     * @return string
-     */
     protected function generateToken(): string
     {
         return random_bytes(20);
     }
 
-    /**
-     * @return bool
-     */
     protected function waitForLock(): bool
     {
         $startTimeMilliseconds = $this->getMilliTime();
@@ -227,17 +195,11 @@ class SessionSpinLockLocker implements SessionLockerInterface
         return false;
     }
 
-    /**
-     * @return int
-     */
     protected function getMilliTime(): int
     {
         return (int)round(microtime(true) * 1000);
     }
 
-    /**
-     * @return bool
-     */
     protected function acquire(): bool
     {
         $lockKey = $this->generateLockKey($this->sessionId);
@@ -249,9 +211,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
         return (bool)$result;
     }
 
-    /**
-     * @return string
-     */
     protected function getUnlockScript(): string
     {
         return <<<LUA
@@ -262,11 +221,6 @@ return 0
 LUA;
     }
 
-    /**
-     * @param string $sessionId
-     *
-     * @return string
-     */
     protected function generateLockKey(string $sessionId): string
     {
         return $this->keyBuilder->buildLockKey($sessionId);

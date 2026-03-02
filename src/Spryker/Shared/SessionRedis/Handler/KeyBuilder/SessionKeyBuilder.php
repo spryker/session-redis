@@ -38,11 +38,6 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
      */
     protected const MAX_SESSION_KEY_LENGTH = 64;
 
-    /**
-     * @param string $sessionId
-     *
-     * @return string
-     */
     public function buildSessionKey(string $sessionId): string
     {
         if (mb_strlen($sessionId) > static::MAX_SESSION_KEY_LENGTH) {
@@ -52,32 +47,16 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
         return sprintf('%s:%s', static::SESSION_KEY_PREFIX, $sessionId);
     }
 
-    /**
-     * @param string $sessionId
-     *
-     * @return string
-     */
     public function buildLockKey(string $sessionId): string
     {
         return sprintf('%s:%s', $this->buildSessionKey($sessionId), static::SESSION_LOCK_KEY_SUFFIX);
     }
 
-    /**
-     * @param string $accountType
-     * @param string $idAccount
-     *
-     * @return string
-     */
     public function buildAccountKey(string $accountType, string $idAccount): string
     {
         return sprintf('%s:%s:%s', $idAccount, $accountType, static::SESSION_ACCOUNT_KEY_SUFFIX);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
-     *
-     * @return string
-     */
     public function buildEntityKey(SessionEntityRequestTransfer $sessionEntityRequestTransfer): string
     {
         return sprintf(

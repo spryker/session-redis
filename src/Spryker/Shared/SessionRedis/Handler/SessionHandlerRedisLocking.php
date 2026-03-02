@@ -43,12 +43,6 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     protected $sessionRedisLifeTimeCalculator;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface $locker
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
-     */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionLockerInterface $locker,
@@ -79,9 +73,6 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
         return $this->redisClient->isConnected();
     }
 
-    /**
-     * @return bool
-     */
     public function close(): bool
     {
         $this->locker->unlockCurrent();

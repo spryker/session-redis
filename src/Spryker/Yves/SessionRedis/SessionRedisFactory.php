@@ -38,9 +38,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class SessionRedisFactory extends AbstractFactory
 {
-    /**
-     * @return \SessionHandlerInterface
-     */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionRedisHandler(
@@ -48,9 +45,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
-     */
     public function createSessionCustomerRedisHandler(): SessionAccountHandlerRedisInterface
     {
         return $this->createSessionHandlerFactory()->createSessionCustomerRedisHandler(
@@ -58,9 +52,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Saver\SessionEntitySaverInterface
-     */
     public function createSessionEntitySaver(): SessionEntitySaverInterface
     {
         return new SessionEntitySaver(
@@ -71,9 +62,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Validator\SessionEntityValidatorInterface
-     */
     public function createSessionEntityValidator(): SessionEntityValidatorInterface
     {
         return new SessionEntityValidator(
@@ -83,9 +71,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
-     */
     public function createSessionKeyBuilder(): SessionKeyBuilderInterface
     {
         return new SessionKeyBuilder();
@@ -96,9 +81,6 @@ class SessionRedisFactory extends AbstractFactory
         return new Md5Hasher();
     }
 
-    /**
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedisLocking(
@@ -106,9 +88,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerConfigurableRedisLocking(): SessionHandlerInterface
     {
         return $this->createSessionHandlerResolver()->resolveConfigurableRedisLockingSessionHandler(
@@ -116,9 +95,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\SessionRedis\Resolver\SessionHandlerResolver
-     */
     public function createSessionHandlerResolver(): SessionHandlerResolver
     {
         return new SessionHandlerResolver(
@@ -128,9 +104,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SessionHandlerInterface
-     */
     public function createSessionHandlerRedisWriteOnlyLocking(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedisWriteOnlyLocking(
@@ -138,9 +111,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
-     */
     public function createSessionRedisWrapper(): SessionRedisWrapperInterface
     {
         return new SessionRedisWrapper(
@@ -150,9 +120,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface
-     */
     public function createSessionHandlerFactory(): SessionHandlerFactoryInterface
     {
         return new SessionHandlerFactory(
@@ -164,9 +131,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface
-     */
     public function createSessionRedisLifeTimeCalculator(): SessionRedisLifeTimeCalculatorInterface
     {
         return new SessionRedisLifeTimeCalculator(
@@ -176,9 +140,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingExclusionCheckerInterface
-     */
     public function createUrlSessionRedisLockingExclusionChecker(): UrlSessionRedisLockingExclusionCheckerInterface
     {
         return new UrlSessionRedisLockingExclusionChecker(
@@ -186,9 +147,6 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Yves\SessionRedis\Checker\BotSessionRedisLockingExclusionCheckerInterface
-     */
     public function createBotSessionRedisLockingExclusionChecker(): BotSessionRedisLockingExclusionCheckerInterface
     {
         return new BotSessionRedisLockingExclusionChecker(
@@ -196,25 +154,16 @@ class SessionRedisFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RequestStack
-     */
     public function getRequestStack(): RequestStack
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::REQUEST_STACK);
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface
-     */
     public function getMonitoringService(): SessionRedisToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::SERVICE_MONITORING);
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface
-     */
     public function getRedisClient(): SessionRedisToRedisClientInterface
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::CLIENT_REDIS);

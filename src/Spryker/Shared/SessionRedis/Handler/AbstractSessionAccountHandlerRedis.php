@@ -34,12 +34,6 @@ abstract class AbstractSessionAccountHandlerRedis implements SessionAccountHandl
      */
     protected $keyBuilder;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
-     * @param \Spryker\Shared\SessionRedis\Hasher\HasherInterface $hasher
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator,
@@ -52,12 +46,6 @@ abstract class AbstractSessionAccountHandlerRedis implements SessionAccountHandl
         $this->keyBuilder = $keyBuilder;
     }
 
-    /**
-     * @param int $idAccount
-     * @param string $idSession
-     *
-     * @return void
-     */
     public function saveSessionAccount(int $idAccount, string $idSession): void
     {
         $this->redisClient->setex(
@@ -67,12 +55,6 @@ abstract class AbstractSessionAccountHandlerRedis implements SessionAccountHandl
         );
     }
 
-    /**
-     * @param int $idAccount
-     * @param string $idSession
-     *
-     * @return bool
-     */
     public function isSessionAccountValid(int $idAccount, string $idSession): bool
     {
         $key = $this->keyBuilder->buildAccountKey($this->getAccountType(), (string)$idAccount);
@@ -85,8 +67,5 @@ abstract class AbstractSessionAccountHandlerRedis implements SessionAccountHandl
         return $this->hasher->validate($idSession, $hashedIdSession);
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getAccountType(): string;
 }

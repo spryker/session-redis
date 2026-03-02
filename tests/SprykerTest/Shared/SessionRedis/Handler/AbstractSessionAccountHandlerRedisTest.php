@@ -28,9 +28,6 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
  */
 class AbstractSessionAccountHandlerRedisTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testSaveCustomerSessionSuccessful(): void
     {
         // Arrange
@@ -58,9 +55,6 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         )->saveSessionAccount($idAccount, $idSession);
     }
 
-    /**
-     * @return void
-     */
     public function testIsSessionAccountValidReturnsTrueWhenIdAccountNotFound(): void
     {
         // Arrange
@@ -85,9 +79,6 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $this->assertTrue($result, 'Session id must be invalid.');
     }
 
-    /**
-     * @return void
-     */
     public function testIsSessionAccountValidReturnsFalseWhenSessionIdInvalid(): void
     {
         // Arrange
@@ -112,9 +103,6 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $this->assertTrue($result, 'Session id must be invalid.');
     }
 
-    /**
-     * @return void
-     */
     public function testIsSessionAccountValidReturnsTrueId(): void
     {
         // Arrange
@@ -139,14 +127,6 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $this->assertFalse($result, 'Session id must be invalid.');
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param int $sessionLifetime
-     * @param \Spryker\Shared\SessionRedis\Hasher\HasherInterface $hasher
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     *
-     * @return \Spryker\Shared\SessionRedis\Handler\AbstractSessionAccountHandlerRedis
-     */
     protected function createSessionAccountHandler(
         SessionRedisWrapperInterface $redisClient,
         int $sessionLifetime,
@@ -157,9 +137,6 @@ class AbstractSessionAccountHandlerRedisTest extends Unit
         $sessionRedisLifeTimeCalculator->method('getSessionLifeTime')->willReturn($sessionLifetime);
 
         return new class ($redisClient, $sessionRedisLifeTimeCalculator, $hasher, $keyBuilder) extends AbstractSessionAccountHandlerRedis {
-            /**
-             * @return string
-             */
             protected function getAccountType(): string
             {
                 return 'account_type';

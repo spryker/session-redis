@@ -57,11 +57,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
@@ -72,11 +67,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
@@ -85,11 +75,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addRequestStack(Container $container): Container
     {
         $container->set(static::REQUEST_STACK, function (ContainerInterface $container) {
@@ -99,11 +84,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMonitoringService(Container $container): Container
     {
         $container->set(static::SERVICE_MONITORING, function (Container $container) {
@@ -117,11 +97,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addRedisClient(Container $container): Container
     {
         $container->set(static::CLIENT_SESSION_REDIS, function (Container $container) {
@@ -133,11 +108,6 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addSessionRedisLifeTimeCalculatorPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR, function () {

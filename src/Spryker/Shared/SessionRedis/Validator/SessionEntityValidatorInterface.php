@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\SessionEntityResponseTransfer;
 
 interface SessionEntityValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\SessionEntityResponseTransfer
-     */
     public function validate(SessionEntityRequestTransfer $sessionEntityRequestTransfer): SessionEntityResponseTransfer;
 }

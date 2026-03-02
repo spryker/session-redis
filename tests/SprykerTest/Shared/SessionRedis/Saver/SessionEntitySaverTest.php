@@ -54,9 +54,6 @@ class SessionEntitySaverTest extends Unit
      */
     protected const TEST_SESSION_LIFETIME = 90;
 
-    /**
-     * @return void
-     */
     public function testSaveShouldNotReturnSuccessWhenSessionNotSaved(): void
     {
         // Arrange
@@ -81,9 +78,6 @@ class SessionEntitySaverTest extends Unit
         $this->assertFalse($sessionEntityResponseTransfer->getIsSuccessfull());
     }
 
-    /**
-     * @return void
-     */
     public function testSaveShouldReturnSuccessWhenSessionIsSaved(): void
     {
         // Arrange
@@ -108,9 +102,6 @@ class SessionEntitySaverTest extends Unit
         $this->assertTrue($sessionEntityResponseTransfer->getIsSuccessfull());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SessionEntityRequestTransfer
-     */
     protected function getSessionEntityRequest(): SessionEntityRequestTransfer
     {
         return (new SessionEntityRequestTransfer())->fromArray([
@@ -120,11 +111,6 @@ class SessionEntitySaverTest extends Unit
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
-     *
-     * @return string
-     */
     protected function buildSessionEntityKey(SessionEntityRequestTransfer $sessionEntityRequestTransfer): string
     {
         return sprintf(

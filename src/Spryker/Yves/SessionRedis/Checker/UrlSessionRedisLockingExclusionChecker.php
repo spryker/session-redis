@@ -12,18 +12,10 @@ use Spryker\Yves\SessionRedis\SessionRedisConfig;
 
 class UrlSessionRedisLockingExclusionChecker implements UrlSessionRedisLockingExclusionCheckerInterface
 {
-    /**
-     * @param \Spryker\Yves\SessionRedis\SessionRedisConfig $sessionRedisConfig
-     */
     public function __construct(protected SessionRedisConfig $sessionRedisConfig)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer $redisLockingSessionHandlerConditionTransfer
-     *
-     * @return bool
-     */
     public function checkCondition(
         RedisLockingSessionHandlerConditionTransfer $redisLockingSessionHandlerConditionTransfer
     ): bool {

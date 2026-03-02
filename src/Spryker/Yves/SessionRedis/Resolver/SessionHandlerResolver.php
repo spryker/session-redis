@@ -28,11 +28,6 @@ class SessionHandlerResolver implements SessionHandlerResolverInterface
     ) {
     }
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $sessionRedisWrapper
-     *
-     * @return \SessionHandlerInterface
-     */
     public function resolveConfigurableRedisLockingSessionHandler(
         SessionRedisWrapperInterface $sessionRedisWrapper
     ): SessionHandlerInterface {
@@ -47,9 +42,6 @@ class SessionHandlerResolver implements SessionHandlerResolverInterface
         return $this->sessionHandlerFactory->createSessionHandlerRedisLocking($sessionRedisWrapper);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer
-     */
     protected function createRedisLockingSessionHandlerConditionTransfer(): RedisLockingSessionHandlerConditionTransfer
     {
         $request = $this->requestStack->getCurrentRequest() ?? Request::createFromGlobals();

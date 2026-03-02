@@ -34,9 +34,6 @@ class SessionLockReleaserPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,9 +41,6 @@ class SessionLockReleaserPluginTest extends Unit
         $this->tester->setDependency(SessionRedisDependencyProvider::REQUEST_STACK, new RequestStack());
     }
 
-    /**
-     * @return void
-     */
     public function testCanReleaseLock(): void
     {
         $sessionId = 'session_id';
@@ -61,9 +55,6 @@ class SessionLockReleaserPluginTest extends Unit
         $this->assertEmpty($lockReader->getTokenForSession($sessionId));
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
-     */
     protected function getSpinLockLocker(): SessionLockerInterface
     {
         return $this->getFactory()
@@ -73,9 +64,6 @@ class SessionLockReleaserPluginTest extends Unit
             );
     }
 
-    /**
-     * @return \Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface
-     */
     protected function getSessionLockReader(): SessionLockReaderInterface
     {
         return $this->getFactory()->createRedisSessionLockReader(
@@ -83,9 +71,6 @@ class SessionLockReleaserPluginTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory
-     */
     protected function getFactory(): SessionRedisCommunicationFactory
     {
         return new SessionRedisCommunicationFactory();

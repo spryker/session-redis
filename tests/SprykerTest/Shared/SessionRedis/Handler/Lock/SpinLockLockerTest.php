@@ -35,9 +35,6 @@ class SpinLockLockerTest extends Unit
      */
     protected $spinLockLocker;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,9 +43,6 @@ class SpinLockLockerTest extends Unit
         $this->setupRedisSpinLockLocker();
     }
 
-    /**
-     * @return void
-     */
     public function testLockBlocksUntilLockIsAcquired(): void
     {
         $this->redisClientMock->expects($this->exactly(3))
@@ -59,9 +53,6 @@ class SpinLockLockerTest extends Unit
         $this->spinLockLocker->lock('session_id');
     }
 
-    /**
-     * @return void
-     */
     public function testUnlockUsesGeneratedKeyFromStoredSessionId(): void
     {
         $sessionId = 'test_session_id';
@@ -82,9 +73,6 @@ class SpinLockLockerTest extends Unit
         $this->spinLockLocker->unlockCurrent();
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNotPerformUnlockWhenNotLocked(): void
     {
         $this->redisClientMock
@@ -94,9 +82,6 @@ class SpinLockLockerTest extends Unit
         $this->spinLockLocker->unlockCurrent();
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisClientMock(): void
     {
         $this->redisClientMock = $this
@@ -104,9 +89,6 @@ class SpinLockLockerTest extends Unit
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisSpinLockLocker(): void
     {
         $this->spinLockLocker = new SessionSpinLockLocker($this->redisClientMock, new SessionKeyBuilder());

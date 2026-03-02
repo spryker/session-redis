@@ -43,9 +43,6 @@ class SessionEntityValidatorTest extends Unit
      */
     protected const TEST_ID_SESSION = 'testSession';
 
-    /**
-     * @return void
-     */
     public function testValidateShouldReturnTrueWhenDataIsNotFound(): void
     {
         // Arrange
@@ -69,9 +66,6 @@ class SessionEntityValidatorTest extends Unit
         $this->assertTrue($sessionEntityResponseTransfer->getIsSuccessfull());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateShouldReturnFalseWhenIdSessionIsInvalid(): void
     {
         // Arrange
@@ -95,9 +89,6 @@ class SessionEntityValidatorTest extends Unit
         $this->assertFalse($sessionEntityResponseTransfer->getIsSuccessfull());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateReturnsTrueId(): void
     {
         // Arrange
@@ -121,9 +112,6 @@ class SessionEntityValidatorTest extends Unit
         $this->assertTrue($sessionEntityResponseTransfer->getIsSuccessfull());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SessionEntityRequestTransfer
-     */
     protected function getSessionEntityRequest(): SessionEntityRequestTransfer
     {
         return (new SessionEntityRequestTransfer())->fromArray([
@@ -133,11 +121,6 @@ class SessionEntityValidatorTest extends Unit
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
-     *
-     * @return string
-     */
     protected function buildSessionEntityKey(SessionEntityRequestTransfer $sessionEntityRequestTransfer): string
     {
         return sprintf(

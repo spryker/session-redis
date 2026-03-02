@@ -12,11 +12,6 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 interface SessionHandlerResolverInterface
 {
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $sessionRedisWrapper
-     *
-     * @return \SessionHandlerInterface
-     */
     public function resolveConfigurableRedisLockingSessionHandler(
         SessionRedisWrapperInterface $sessionRedisWrapper
     ): SessionHandlerInterface;

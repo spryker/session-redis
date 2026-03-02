@@ -22,18 +22,10 @@ class BotSessionRedisLockingExclusionChecker implements BotSessionRedisLockingEx
      */
     protected const HEADER_USER_AGENT_LOWERCASE = 'user-agent';
 
-    /**
-     * @param \Spryker\Yves\SessionRedis\SessionRedisConfig $sessionRedisConfig
-     */
     public function __construct(protected SessionRedisConfig $sessionRedisConfig)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RedisLockingSessionHandlerConditionTransfer $redisLockingSessionHandlerConditionTransfer
-     *
-     * @return bool
-     */
     public function checkCondition(
         RedisLockingSessionHandlerConditionTransfer $redisLockingSessionHandlerConditionTransfer
     ): bool {
@@ -69,11 +61,6 @@ class BotSessionRedisLockingExclusionChecker implements BotSessionRedisLockingEx
         return (string)$userAgent;
     }
 
-    /**
-     * @param string $userAgent
-     *
-     * @return bool
-     */
     protected function isBot(string $userAgent): bool
     {
         foreach ($this->sessionRedisConfig->getSessionRedisLockingExcludedBotUserAgents() as $botUserAgent) {

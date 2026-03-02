@@ -40,9 +40,6 @@ class SessionHandlerConfigurableRedisLockingProviderPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -54,9 +51,6 @@ class SessionHandlerConfigurableRedisLockingProviderPluginTest extends Unit
         $this->sessionHandlerPlugin = new SessionHandlerConfigurableRedisLockingProviderPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testHasCorrectSessionHandlerName(): void
     {
         $this->assertSame(
@@ -65,17 +59,11 @@ class SessionHandlerConfigurableRedisLockingProviderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testPluginReturnsCorrectLockingSessionHandler(): void
     {
         $this->assertInstanceOf(SessionHandlerRedisLocking::class, $this->sessionHandlerPlugin->getSessionHandler());
     }
 
-    /**
-     * @return void
-     */
     public function testPluginReturnsCorrectNonLockingSessionHandler(): void
     {
         $sessionRedisLockingExclusionConditionPluginMock = $this->getMockBuilder(SessionRedisLockingExclusionConditionPluginInterface::class)
@@ -94,9 +82,6 @@ class SessionHandlerConfigurableRedisLockingProviderPluginTest extends Unit
         $this->assertInstanceOf(SessionHandlerRedis::class, $this->sessionHandlerPlugin->getSessionHandler());
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\SessionRedisConfig
-     */
     protected function getSharedConfig(): SessionRedisConfig
     {
         return new SessionRedisConfig();

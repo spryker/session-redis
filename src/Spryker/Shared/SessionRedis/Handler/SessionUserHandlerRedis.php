@@ -9,9 +9,6 @@ namespace Spryker\Shared\SessionRedis\Handler;
 
 class SessionUserHandlerRedis extends AbstractSessionAccountHandlerRedis
 {
-    /**
-     * @return string
-     */
     protected function getAccountType(): string
     {
         return 'user';

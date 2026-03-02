@@ -201,9 +201,6 @@ class SessionRedisConfig extends AbstractBundleConfig
         return $this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATA_SOURCE_NAMES, []);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\RedisCredentialsTransfer
-     */
     protected function getConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())

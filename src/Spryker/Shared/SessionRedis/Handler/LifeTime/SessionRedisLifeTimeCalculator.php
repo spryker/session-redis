@@ -42,9 +42,6 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
         $this->defaultSessionLifeTime = $defaultSessionLifeTime;
     }
 
-    /**
-     * @return int
-     */
     public function getSessionLifeTime(): int
     {
         if (!$this->requestStack->getCurrentRequest()) {
@@ -61,9 +58,6 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
         return $this->defaultSessionLifeTime;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\HttpRequestTransfer
-     */
     protected function createHttpRequestTransfer(): HttpRequestTransfer
     {
         $httpRequestTransfer = new HttpRequestTransfer();

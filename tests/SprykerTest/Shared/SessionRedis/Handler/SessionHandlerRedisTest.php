@@ -51,9 +51,6 @@ class SessionHandlerRedisTest extends Unit
      */
     protected $sessionRedisLifeTimeCalculatorMock;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -64,9 +61,6 @@ class SessionHandlerRedisTest extends Unit
         $this->setupSessionHandler();
     }
 
-    /**
-     * @return void
-     */
     public function canConnectToRedisWhenSessionIsOpen(): void
     {
         $this->redisClientMock
@@ -76,9 +70,6 @@ class SessionHandlerRedisTest extends Unit
         $this->assertTrue($this->sessionHandler->open('save path', 'session name'));
     }
 
-    /**
-     * @return void
-     */
     public function testCanDisconnectFromRedisWhenSessionIsClosed(): void
     {
         $this->redisClientMock
@@ -88,9 +79,6 @@ class SessionHandlerRedisTest extends Unit
         $this->assertTrue($this->sessionHandler->close());
     }
 
-    /**
-     * @return void
-     */
     public function testCanReadEmptyData(): void
     {
         $this->redisClientMock
@@ -101,9 +89,6 @@ class SessionHandlerRedisTest extends Unit
         $this->assertSame('', $this->sessionHandler->read('save id'));
     }
 
-    /**
-     * @return void
-     */
     public function testCanReadNonEmptyData(): void
     {
         $this->redisClientMock
@@ -114,17 +99,11 @@ class SessionHandlerRedisTest extends Unit
         $this->assertSame('data', $this->sessionHandler->read('save id'));
     }
 
-    /**
-     * @return void
-     */
     public function testGcReturnsTrue(): void
     {
         $this->assertTrue($this->sessionHandler->gc(1));
     }
 
-    /**
-     * @return void
-     */
     public function testCatDestroySession(): void
     {
         $this->redisClientMock
@@ -135,17 +114,11 @@ class SessionHandlerRedisTest extends Unit
         $this->sessionHandler->destroy('session_id');
     }
 
-    /**
-     * @return void
-     */
     public function testWriterReturnsTrueWhenDataIsEmpty(): void
     {
         $this->assertTrue($this->sessionHandler->write('session_id', ''));
     }
 
-    /**
-     * @return void
-     */
     public function testCanWriteExpirableData(): void
     {
         $this->redisClientMock
@@ -161,27 +134,18 @@ class SessionHandlerRedisTest extends Unit
         $this->assertTrue($this->sessionHandler->write('session_id', 'data'));
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisClientMock(): void
     {
         $this->redisClientMock = $this->getMockBuilder(SessionRedisWrapperInterface::class)
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupMonitoringServiceMock(): void
     {
         $this->monitoringServiceMock = $this->getMockBuilder(SessionRedisToMonitoringServiceInterface::class)
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionRedisLifeTimeCalculatorMock(): void
     {
         $this->sessionRedisLifeTimeCalculatorMock = $this->getMockBuilder(SessionRedisLifeTimeCalculator::class)
@@ -192,9 +156,6 @@ class SessionHandlerRedisTest extends Unit
             ->willReturn(static::SESSION_LIFETIME);
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionHandler(): void
     {
         $this->sessionHandler = new SessionHandlerRedis(

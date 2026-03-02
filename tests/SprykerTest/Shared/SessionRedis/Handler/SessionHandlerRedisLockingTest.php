@@ -52,9 +52,6 @@ class SessionHandlerRedisLockingTest extends Unit
      */
     protected $sessionRedisLifeTimeCalculatorMock;
 
-    /**
-     * @return void
-     */
     public function testReadReturnsEmptyStringOnMissingSessionKey(): void
     {
         $this->redisClientMock
@@ -73,17 +70,11 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->assertSame('', $sessionData);
     }
 
-    /**
-     * @return void
-     */
     public function testGcReturnsTrue(): void
     {
         $this->assertTrue($this->sessionHandler->gc(1));
     }
 
-    /**
-     * @return void
-     */
     public function testReadingSessionDataWillThrowExceptionWhenImpossibleToAcquireLock(): void
     {
         $this->expectException(LockCouldNotBeAcquiredException::class);
@@ -95,9 +86,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->sessionHandler->read('session_key');
     }
 
-    /**
-     * @return void
-     */
     public function testCanDestroySession(): void
     {
         $this->redisClientMock
@@ -113,9 +101,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->assertTrue($this->sessionHandler->destroy('session_key'));
     }
 
-    /**
-     * @return void
-     */
     public function testDestructorUnlocksSessionDataAndDisconnectsFromRedis(): void
     {
         $this->redisClientMock
@@ -129,9 +114,6 @@ class SessionHandlerRedisLockingTest extends Unit
         unset($this->sessionHandler);
     }
 
-    /**
-     * @return void
-     */
     public function testClosingSessionUnlocksSessionData(): void
     {
         $this->spinLockLockerMock
@@ -141,9 +123,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->assertTrue($this->sessionHandler->close());
     }
 
-    /**
-     * @return void
-     */
     public function testWritesSessionDataWithTtlSet(): void
     {
         $dummyData = 'foo bar baz';
@@ -160,9 +139,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->assertTrue($this->sessionHandler->write('session_key', $dummyData));
     }
 
-    /**
-     * @return void
-     */
     public function testReadDecodesLegacyJsonSession(): void
     {
         $dummyData = 'foo bar baz';
@@ -182,9 +158,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->assertSame($dummyData, $sessionData);
     }
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -195,9 +168,6 @@ class SessionHandlerRedisLockingTest extends Unit
         $this->setupSessionHandlerRedisLocking();
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisClientMock(): void
     {
         $this->redisClientMock = $this
@@ -205,9 +175,6 @@ class SessionHandlerRedisLockingTest extends Unit
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupRedisSpinLockLockerMock(): void
     {
         $this->spinLockLockerMock = $this
@@ -216,9 +183,6 @@ class SessionHandlerRedisLockingTest extends Unit
             ->getMock();
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionRedisLifeTimeCalculatorMock(): void
     {
         $this->sessionRedisLifeTimeCalculatorMock = $this->getMockBuilder(SessionRedisLifeTimeCalculator::class)
@@ -229,9 +193,6 @@ class SessionHandlerRedisLockingTest extends Unit
             ->willReturn(static::TIME_TO_LIVE);
     }
 
-    /**
-     * @return void
-     */
     protected function setupSessionHandlerRedisLocking(): void
     {
         $this->sessionHandler = new SessionHandlerRedisLocking(

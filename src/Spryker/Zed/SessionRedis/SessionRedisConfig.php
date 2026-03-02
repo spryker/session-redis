@@ -153,9 +153,6 @@ class SessionRedisConfig extends AbstractBundleConfig
         return $this->get(SessionRedisConstants::ZED_SESSION_REDIS_DATA_SOURCE_NAMES, []);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\RedisCredentialsTransfer
-     */
     protected function getZedConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())
@@ -193,9 +190,6 @@ class SessionRedisConfig extends AbstractBundleConfig
         return $this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATA_SOURCE_NAMES, []);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\RedisCredentialsTransfer
-     */
     protected function getYvesConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())

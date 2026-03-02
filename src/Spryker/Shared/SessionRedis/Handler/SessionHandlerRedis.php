@@ -57,12 +57,6 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     protected $sessionRedisLifeTimeCalculator;
 
-    /**
-     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
-     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
-     */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionKeyBuilderInterface $keyBuilder,
@@ -88,9 +82,6 @@ class SessionHandlerRedis implements SessionHandlerInterface
         return $this->redisClient->isConnected();
     }
 
-    /**
-     * @return bool
-     */
     public function close(): bool
     {
         $this->redisClient->disconnect();
@@ -165,11 +156,6 @@ class SessionHandlerRedis implements SessionHandlerInterface
         return true;
     }
 
-    /**
-     * @param string $sessionId
-     *
-     * @return string
-     */
     protected function buildSessionKey(string $sessionId): string
     {
         return $this->keyBuilder->buildSessionKey($sessionId);

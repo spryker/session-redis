@@ -38,9 +38,6 @@ class SessionHandlerRedisWriteOnlyLockingProviderPluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -52,25 +49,16 @@ class SessionHandlerRedisWriteOnlyLockingProviderPluginTest extends Unit
         $this->sessionHandlerPlugin = new SessionHandlerRedisWriteOnlyLockingProviderPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testHasCorrectSessionHandlerName(): void
     {
         $this->assertSame($this->getSharedConfig()->getSessionHandlerRedisWriteOnlyLockingName(), $this->sessionHandlerPlugin->getSessionHandlerName());
     }
 
-    /**
-     * @return void
-     */
     public function testPluginReturnsCorrectSessionHandler(): void
     {
         $this->assertInstanceOf(SessionHandlerRedisWriteOnlyLocking::class, $this->sessionHandlerPlugin->getSessionHandler());
     }
 
-    /**
-     * @return \Spryker\Shared\SessionRedis\SessionRedisConfig
-     */
     protected function getSharedConfig(): SessionRedisConfig
     {
         return new SessionRedisConfig();

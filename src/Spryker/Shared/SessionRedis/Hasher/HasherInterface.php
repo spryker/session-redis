@@ -9,18 +9,7 @@ namespace Spryker\Shared\SessionRedis\Hasher;
 
 interface HasherInterface
 {
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     public function encrypt(string $string): string;
 
-    /**
-     * @param string $string
-     * @param string $hash
-     *
-     * @return bool
-     */
     public function validate(string $string, string $hash): bool;
 }
