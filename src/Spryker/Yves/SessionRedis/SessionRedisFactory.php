@@ -30,6 +30,8 @@ use Spryker\Yves\SessionRedis\Checker\BotSessionRedisLockingExclusionChecker;
 use Spryker\Yves\SessionRedis\Checker\BotSessionRedisLockingExclusionCheckerInterface;
 use Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingExclusionChecker;
 use Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingExclusionCheckerInterface;
+use Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingInclusionChecker;
+use Spryker\Yves\SessionRedis\Checker\UrlSessionRedisLockingInclusionCheckerInterface;
 use Spryker\Yves\SessionRedis\Resolver\SessionHandlerResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -143,6 +145,13 @@ class SessionRedisFactory extends AbstractFactory
     public function createUrlSessionRedisLockingExclusionChecker(): UrlSessionRedisLockingExclusionCheckerInterface
     {
         return new UrlSessionRedisLockingExclusionChecker(
+            $this->getConfig(),
+        );
+    }
+
+    public function createUrlSessionRedisLockingInclusionChecker(): UrlSessionRedisLockingInclusionCheckerInterface
+    {
+        return new UrlSessionRedisLockingInclusionChecker(
             $this->getConfig(),
         );
     }

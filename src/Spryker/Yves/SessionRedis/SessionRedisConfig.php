@@ -145,6 +145,22 @@ class SessionRedisConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns URL patterns for which session locking is actively applied.
+     * - When this list is non-empty, only requests whose URI matches one of the patterns will be locked.
+     * - All other requests bypass the session lock, improving throughput for read-heavy pages.
+     * - When the list is empty (default), this config has no effect and locking is governed by other plugins.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getSessionRedisLockingIncludedUrlPatterns(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
      * - Returns user agent strings used to identify bot traffic.
      * - Bot traffic is excluded from Redis session locking for better performance.
      *
