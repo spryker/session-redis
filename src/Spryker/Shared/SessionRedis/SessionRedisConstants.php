@@ -77,6 +77,14 @@ interface SessionRedisConstants
 
     /**
      * Specification:
+     * - Defines a username for Redis ACL authentication when used as Yves session storage.
+     *
+     * @api
+     */
+    public const string YVES_SESSION_REDIS_USER = 'SESSION_REDIS:YVES_SESSION_REDIS_USER';
+
+    /**
+     * Specification:
      * - Defines a host for Redis connection when used as Yves session storage.
      *
      * @api
@@ -187,6 +195,14 @@ interface SessionRedisConstants
      * @var string
      */
     public const ZED_SESSION_REDIS_PASSWORD = 'SESSION_REDIS:ZED_SESSION_REDIS_PASSWORD';
+
+    /**
+     * Specification:
+     * - Defines a username for Redis ACL authentication when used as Zed session storage.
+     *
+     * @api
+     */
+    public const string ZED_SESSION_REDIS_USER = 'SESSION_REDIS:ZED_SESSION_REDIS_USER';
 
     /**
      * Specification:

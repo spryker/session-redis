@@ -9,7 +9,7 @@
         "spryker-shop/session-customer-validation-page-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/monitoring": "^1.0.0 || ^2.0.0",
-        "spryker/redis": "^2.1.0",
+        "spryker/redis": "^2.13.0",
         "spryker/session-customer-validation-extension": "^1.0.0",
         "spryker/session-extension": "^1.0.0",
         "spryker/session-redis-extension": "^1.2.0",
