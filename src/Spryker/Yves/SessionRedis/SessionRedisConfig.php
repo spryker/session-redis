@@ -225,7 +225,8 @@ class SessionRedisConfig extends AbstractBundleConfig
             ->setPort($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PORT))
             ->setUsername($this->get(SessionRedisConstants::YVES_SESSION_REDIS_USER, ''))
             ->setDatabase($this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATABASE))
-            ->setPassword($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD, ''));
+            ->setPassword($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD, ''))
+            ->setIsPersistent($this->get(SessionRedisConstants::YVES_SESSION_PERSISTENT_CONNECTION, false));
     }
 
     /**

@@ -216,6 +216,22 @@ interface SessionRedisConstants
 
     /**
      * Specification:
+     * - Enables persistent connection for Redis when used as Yves session storage.
+     *
+     * @api
+     */
+    public const string YVES_SESSION_PERSISTENT_CONNECTION = 'SESSION_REDIS:YVES_SESSION_PERSISTENT_CONNECTION';
+
+    /**
+     * Specification:
+     * - Enables persistent connection for Redis when used as Zed session storage.
+     *
+     * @api
+     */
+    public const string ZED_SESSION_PERSISTENT_CONNECTION = 'SESSION_REDIS:ZED_SESSION_PERSISTENT_CONNECTION';
+
+    /**
+     * Specification:
      * - Sets the session locking timeout in milliseconds.
      *
      * @api
