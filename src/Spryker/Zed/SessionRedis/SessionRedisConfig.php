@@ -18,11 +18,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SessionRedisConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const ZED_SESSION_REDIS_CONNECTION_KEY = 'SESSION_ZED';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const YVES_SESSION_REDIS_CONNECTION_KEY = 'SESSION_YVES';

@@ -12,11 +12,15 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class SessionRedisConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS = 'redis';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
@@ -33,6 +37,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     public const SESSION_HANDLER_CONFIGURABLE_REDIS_LOCKING = 'configurable_redis_locking';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const SESSION_HANDLER_REDIS_WRITE_ONLY_LOCKING = 'redis_write_only_locking';
