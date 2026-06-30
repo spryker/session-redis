@@ -114,11 +114,6 @@ class SessionHandlerRedisTest extends Unit
         $this->sessionHandler->destroy('session_id');
     }
 
-    public function testWriterReturnsTrueWhenDataIsEmpty(): void
-    {
-        $this->assertTrue($this->sessionHandler->write('session_id', ''));
-    }
-
     public function testCanWriteExpirableData(): void
     {
         $this->redisClientMock
@@ -127,11 +122,26 @@ class SessionHandlerRedisTest extends Unit
             ->with(
                 'session:session_id',
                 static::SESSION_LIFETIME,
-                json_encode('data'),
+                'data',
             )
             ->willReturn(true);
 
         $this->assertTrue($this->sessionHandler->write('session_id', 'data'));
+    }
+
+    public function testCanWriteEmptyData(): void
+    {
+        $this->redisClientMock
+            ->expects($this->once())
+            ->method('setex')
+            ->with(
+                'session:session_id',
+                static::SESSION_LIFETIME,
+                '',
+            )
+            ->willReturn(true);
+
+        $this->assertTrue($this->sessionHandler->write('session_id', ''));
     }
 
     protected function setupRedisClientMock(): void
