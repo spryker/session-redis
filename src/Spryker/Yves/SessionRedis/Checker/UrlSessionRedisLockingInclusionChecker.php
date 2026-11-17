@@ -30,7 +30,7 @@ class UrlSessionRedisLockingInclusionChecker implements UrlSessionRedisLockingIn
         }
 
         $combinedPattern = '/(?:' . implode(')|(?:', array_map(
-            fn (string $p) => substr($p, 1, -1),
+            fn (string $pattern) => substr($pattern, 1, -1),
             $includedUrlPatterns,
         )) . ')/';
 
