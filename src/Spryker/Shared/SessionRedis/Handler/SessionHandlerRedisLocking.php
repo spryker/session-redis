@@ -8,20 +8,19 @@
 namespace Spryker\Shared\SessionRedis\Handler;
 
 use SessionHandlerInterface;
+use SessionUpdateTimestampHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
-class SessionHandlerRedisLocking implements SessionHandlerInterface
+class SessionHandlerRedisLocking implements SessionHandlerInterface, SessionUpdateTimestampHandlerInterface
 {
     use SessionDataNormalizerTrait;
+    use SessionIdValidationTrait;
 
-    /**
-     * @var string
-     */
-    public const KEY_PREFIX = 'session:';
+    public const string KEY_PREFIX = 'session:';
 
     /**
      * @var \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
@@ -80,28 +79,49 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
         return true;
     }
 
+    public function validateId(string $id): bool
+    {
+        $this->lockSession($id);
+
+        if ($this->prefetchSessionData($id)) {
+            return true;
+        }
+
+        $this->locker->unlockCurrent();
+
+        return false;
+    }
+
     /**
      * @param string $sessionId
-     *
-     * @throws \Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException
      *
      * @return string
      */
     public function read($sessionId): string
     {
-        if (!$this->locker->lock($sessionId)) {
-            throw new LockCouldNotBeAcquiredException(
-                sprintf(
-                    '%s could not acquire access to the session %s',
-                    static::class,
-                    $sessionId,
-                ),
-            );
+        if (!$this->hasPrefetchedSessionData($sessionId)) {
+            $this->lockSession($sessionId);
         }
 
-        $sessionData = $this->redisClient->get($this->keyBuilder->buildSessionKey($sessionId));
+        return $this->normalizeSessionData($this->readSessionData($sessionId));
+    }
 
-        return $this->normalizeSessionData($sessionData);
+    /**
+     * @throws \Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException
+     */
+    protected function lockSession(string $sessionId): void
+    {
+        if ($this->locker->lock($sessionId)) {
+            return;
+        }
+
+        throw new LockCouldNotBeAcquiredException(
+            sprintf(
+                '%s could not acquire access to the session %s',
+                static::class,
+                $sessionId,
+            ),
+        );
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SessionRedis\Handler;
 
 use Codeception\Test\Unit;
+use SessionUpdateTimestampHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
@@ -26,10 +27,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
  */
 class SessionHandlerRedisWriteOnlyLockingTest extends Unit
 {
-    /**
-     * @var int
-     */
-    protected const TIME_TO_LIVE = 60;
+    protected const int TIME_TO_LIVE = 60;
 
     /**
      * @var \Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking
@@ -67,6 +65,21 @@ class SessionHandlerRedisWriteOnlyLockingTest extends Unit
             'testValue',
             $this->sessionHandler->read('testSessionId'),
         );
+    }
+
+    public function testValidateIdDoesNotLockSession(): void
+    {
+        $this->redisClientMock
+            ->method('get')
+            ->with('session:testSessionId')
+            ->willReturn(null);
+
+        $this->spinLockLockerMock
+            ->expects($this->never())
+            ->method('lock');
+
+        $this->assertInstanceOf(SessionUpdateTimestampHandlerInterface::class, $this->sessionHandler);
+        $this->assertFalse($this->sessionHandler->validateId('testSessionId'));
     }
 
     protected function setUp(): void

@@ -8,29 +8,22 @@
 namespace Spryker\Shared\SessionRedis\Handler;
 
 use SessionHandlerInterface;
+use SessionUpdateTimestampHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
-class SessionHandlerRedis implements SessionHandlerInterface
+class SessionHandlerRedis implements SessionHandlerInterface, SessionUpdateTimestampHandlerInterface
 {
     use SessionDataNormalizerTrait;
+    use SessionIdValidationTrait;
 
-    /**
-     * @var string
-     */
-    public const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
+    public const string METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
 
-    /**
-     * @var string
-     */
-    public const METRIC_SESSION_WRITE_TIME = 'Redis/Session_write_time';
+    public const string METRIC_SESSION_WRITE_TIME = 'Redis/Session_write_time';
 
-    /**
-     * @var string
-     */
-    public const METRIC_SESSION_READ_TIME = 'Redis/Session_read_time';
+    public const string METRIC_SESSION_READ_TIME = 'Redis/Session_read_time';
 
     /**
      * @var \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
@@ -96,9 +89,8 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     public function read($sessionId): string
     {
-        $key = $this->buildSessionKey($sessionId);
         $startTime = microtime(true);
-        $result = $this->redisClient->get($key);
+        $result = $this->readSessionData($sessionId);
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $this->normalizeSessionData($result);

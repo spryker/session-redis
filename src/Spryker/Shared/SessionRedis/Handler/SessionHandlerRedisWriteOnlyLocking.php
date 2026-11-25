@@ -46,9 +46,12 @@ class SessionHandlerRedisWriteOnlyLocking extends SessionHandlerRedisLocking
      */
     public function read($sessionId): string
     {
-        $sessionData = $this->redisClient->get($this->keyBuilder->buildSessionKey($sessionId));
+        return $this->normalizeSessionData($this->readSessionData($sessionId));
+    }
 
-        return $this->normalizeSessionData($sessionData);
+    public function validateId(string $id): bool
+    {
+        return $this->prefetchSessionData($id);
     }
 
     /**

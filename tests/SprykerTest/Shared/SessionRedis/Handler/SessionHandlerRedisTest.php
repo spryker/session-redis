@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SessionRedis\Handler;
 
 use Codeception\Test\Unit;
+use SessionUpdateTimestampHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
@@ -26,10 +27,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
  */
 class SessionHandlerRedisTest extends Unit
 {
-    /**
-     * @var int
-     */
-    protected const SESSION_LIFETIME = 60;
+    protected const int SESSION_LIFETIME = 60;
 
     /**
      * @var \Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis
@@ -142,6 +140,79 @@ class SessionHandlerRedisTest extends Unit
             ->willReturn(true);
 
         $this->assertTrue($this->sessionHandler->write('session_id', ''));
+    }
+
+    public function testHandlerImplementsSessionIdValidationSoStrictModeRejectsForgedSessionIds(): void
+    {
+        $this->assertInstanceOf(SessionUpdateTimestampHandlerInterface::class, $this->sessionHandler);
+    }
+
+    public function testValidateIdReturnsFalseForSessionIdWithoutStoredSession(): void
+    {
+        $this->redisClientMock
+            ->method('get')
+            ->with('session:forged_session_id')
+            ->willReturn(null);
+
+        $this->assertTrue(
+            $this->sessionHandler instanceof SessionUpdateTimestampHandlerInterface
+            && !$this->sessionHandler->validateId('forged_session_id'),
+        );
+    }
+
+    public function testValidateIdReturnsTrueForSessionIdWithStoredSession(): void
+    {
+        $this->redisClientMock
+            ->method('get')
+            ->with('session:known_session_id')
+            ->willReturn('"data"');
+
+        $this->assertTrue(
+            $this->sessionHandler instanceof SessionUpdateTimestampHandlerInterface
+            && $this->sessionHandler->validateId('known_session_id'),
+        );
+    }
+
+    public function testValidateIdFollowedByReadReadsRedisOnlyOnce(): void
+    {
+        $this->redisClientMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('session:known_session_id')
+            ->willReturn('data');
+
+        $this->assertTrue(
+            $this->sessionHandler instanceof SessionUpdateTimestampHandlerInterface
+            && $this->sessionHandler->validateId('known_session_id'),
+        );
+        $this->assertSame('data', $this->sessionHandler->read('known_session_id'));
+    }
+
+    public function testSecondReadAfterValidateIdReadsFreshData(): void
+    {
+        $this->redisClientMock
+            ->expects($this->exactly(2))
+            ->method('get')
+            ->willReturnOnConsecutiveCalls('stale', 'fresh');
+
+        $this->sessionHandler instanceof SessionUpdateTimestampHandlerInterface && $this->sessionHandler->validateId('session_id');
+
+        $this->assertSame('stale', $this->sessionHandler->read('session_id'));
+        $this->assertSame('fresh', $this->sessionHandler->read('session_id'));
+    }
+
+    public function testUpdateTimestampRefreshesSessionLifetimeWithUnchangedData(): void
+    {
+        $this->redisClientMock
+            ->expects($this->once())
+            ->method('setex')
+            ->with('session:session_id', static::SESSION_LIFETIME, 'data')
+            ->willReturn(true);
+
+        $this->assertTrue(
+            $this->sessionHandler instanceof SessionUpdateTimestampHandlerInterface
+            && $this->sessionHandler->updateTimestamp('session_id', 'data'),
+        );
     }
 
     protected function setupRedisClientMock(): void

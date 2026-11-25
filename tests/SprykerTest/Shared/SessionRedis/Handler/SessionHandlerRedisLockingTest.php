@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SessionRedis\Handler;
 
 use Codeception\Test\Unit;
+use SessionUpdateTimestampHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
@@ -27,10 +28,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
  */
 class SessionHandlerRedisLockingTest extends Unit
 {
-    /**
-     * @var int
-     */
-    protected const TIME_TO_LIVE = 60;
+    protected const int TIME_TO_LIVE = 60;
 
     /**
      * @var \Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking
@@ -156,6 +154,97 @@ class SessionHandlerRedisLockingTest extends Unit
         $sessionData = $this->sessionHandler->read('session_key');
 
         $this->assertSame($dummyData, $sessionData);
+    }
+
+    public function testValidateIdReturnsFalseForForgedSessionIdAndReleasesLock(): void
+    {
+        $this->redisClientMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('session:forged_session_id')
+            ->willReturn(null);
+
+        $this->spinLockLockerMock
+            ->expects($this->once())
+            ->method('lock')
+            ->willReturn(true);
+
+        $this->spinLockLockerMock
+            ->expects($this->atLeastOnce())
+            ->method('unlockCurrent');
+
+        $this->assertInstanceOf(SessionUpdateTimestampHandlerInterface::class, $this->sessionHandler);
+        $this->assertFalse($this->sessionHandler->validateId('forged_session_id'));
+    }
+
+    public function testValidateIdFollowedByReadLocksAndReadsSessionOnlyOnce(): void
+    {
+        $this->redisClientMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('session:known_session_id')
+            ->willReturn('foo bar baz');
+
+        $this->spinLockLockerMock
+            ->expects($this->once())
+            ->method('lock')
+            ->willReturn(true);
+
+        $this->assertTrue($this->sessionHandler->validateId('known_session_id'));
+        $this->assertSame('foo bar baz', $this->sessionHandler->read('known_session_id'));
+    }
+
+    public function testValidateIdTreatsEmptySessionAsStored(): void
+    {
+        $this->redisClientMock
+            ->method('get')
+            ->with('session:known_session_id')
+            ->willReturn('');
+
+        $this->spinLockLockerMock
+            ->method('lock')
+            ->willReturn(true);
+
+        $this->assertTrue($this->sessionHandler->validateId('known_session_id'));
+    }
+
+    public function testValidateIdThrowsExceptionWhenImpossibleToAcquireLock(): void
+    {
+        $this->expectException(LockCouldNotBeAcquiredException::class);
+
+        $this->spinLockLockerMock
+            ->method('lock')
+            ->willReturn(false);
+
+        $this->sessionHandler->validateId('known_session_id');
+    }
+
+    public function testReadAfterReadReadsFreshDataAndLocksAgain(): void
+    {
+        $this->redisClientMock
+            ->expects($this->exactly(2))
+            ->method('get')
+            ->willReturnOnConsecutiveCalls('first', 'second');
+
+        $this->spinLockLockerMock
+            ->expects($this->exactly(2))
+            ->method('lock')
+            ->willReturn(true);
+
+        $this->sessionHandler->validateId('session_key');
+        $this->assertSame('first', $this->sessionHandler->read('session_key'));
+        $this->assertSame('second', $this->sessionHandler->read('session_key'));
+    }
+
+    public function testUpdateTimestampRefreshesSessionLifetimeWithUnchangedData(): void
+    {
+        $this->redisClientMock
+            ->expects($this->once())
+            ->method('setex')
+            ->with('session:session_key', static::TIME_TO_LIVE, 'foo bar baz')
+            ->willReturn(true);
+
+        $this->assertTrue($this->sessionHandler->updateTimestamp('session_key', 'foo bar baz'));
     }
 
     protected function setUp(): void
