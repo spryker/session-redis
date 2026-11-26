@@ -165,22 +165,17 @@ class SessionHandlerRedisLockingTest extends Unit
             ->willReturn(null);
 
         $this->spinLockLockerMock
-            ->expects($this->once())
-            ->method('lock')
-            ->willReturn(true);
-
-        $this->spinLockLockerMock
-            ->expects($this->atLeastOnce())
-            ->method('unlockCurrent');
+            ->expects($this->never())
+            ->method('lock');
 
         $this->assertInstanceOf(SessionUpdateTimestampHandlerInterface::class, $this->sessionHandler);
         $this->assertFalse($this->sessionHandler->validateId('forged_session_id'));
     }
 
-    public function testValidateIdFollowedByReadLocksAndReadsSessionOnlyOnce(): void
+    public function testValidateIdDoesNotLockAndReadLocksAndReadsSessionAgain(): void
     {
         $this->redisClientMock
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('get')
             ->with('session:known_session_id')
             ->willReturn('foo bar baz');
@@ -202,13 +197,13 @@ class SessionHandlerRedisLockingTest extends Unit
             ->willReturn('');
 
         $this->spinLockLockerMock
-            ->method('lock')
-            ->willReturn(true);
+            ->expects($this->never())
+            ->method('lock');
 
         $this->assertTrue($this->sessionHandler->validateId('known_session_id'));
     }
 
-    public function testValidateIdThrowsExceptionWhenImpossibleToAcquireLock(): void
+    public function testReadThrowsExceptionWhenImpossibleToAcquireLock(): void
     {
         $this->expectException(LockCouldNotBeAcquiredException::class);
 
@@ -216,7 +211,7 @@ class SessionHandlerRedisLockingTest extends Unit
             ->method('lock')
             ->willReturn(false);
 
-        $this->sessionHandler->validateId('known_session_id');
+        $this->sessionHandler->read('known_session_id');
     }
 
     public function testReadAfterReadReadsFreshDataAndLocksAgain(): void
@@ -231,7 +226,6 @@ class SessionHandlerRedisLockingTest extends Unit
             ->method('lock')
             ->willReturn(true);
 
-        $this->sessionHandler->validateId('session_key');
         $this->assertSame('first', $this->sessionHandler->read('session_key'));
         $this->assertSame('second', $this->sessionHandler->read('session_key'));
     }

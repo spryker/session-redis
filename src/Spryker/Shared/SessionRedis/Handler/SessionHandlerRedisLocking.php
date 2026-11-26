@@ -81,15 +81,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface, SessionUpda
 
     public function validateId(string $id): bool
     {
-        $this->lockSession($id);
-
-        if ($this->prefetchSessionData($id)) {
-            return true;
-        }
-
-        $this->locker->unlockCurrent();
-
-        return false;
+        return $this->redisClient->get($this->keyBuilder->buildSessionKey($id)) !== null;
     }
 
     /**
@@ -99,9 +91,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface, SessionUpda
      */
     public function read($sessionId): string
     {
-        if (!$this->hasPrefetchedSessionData($sessionId)) {
-            $this->lockSession($sessionId);
-        }
+        $this->lockSession($sessionId);
 
         return $this->normalizeSessionData($this->readSessionData($sessionId));
     }

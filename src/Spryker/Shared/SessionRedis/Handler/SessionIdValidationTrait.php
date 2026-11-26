@@ -11,10 +11,9 @@ namespace Spryker\Shared\SessionRedis\Handler;
 
 trait SessionIdValidationTrait
 {
-    /**
-     * @var array<string, string>
-     */
-    protected array $prefetchedSessionDataBySessionId = [];
+    protected ?string $prefetchedSessionId = null;
+
+    protected ?string $prefetchedSessionData = null;
 
     public function validateId(string $id): bool
     {
@@ -34,14 +33,15 @@ trait SessionIdValidationTrait
             return false;
         }
 
-        $this->prefetchedSessionDataBySessionId[$sessionId] = $sessionData;
+        $this->prefetchedSessionId = $sessionId;
+        $this->prefetchedSessionData = $sessionData;
 
         return true;
     }
 
     protected function hasPrefetchedSessionData(string $sessionId): bool
     {
-        return array_key_exists($sessionId, $this->prefetchedSessionDataBySessionId);
+        return $this->prefetchedSessionId === $sessionId;
     }
 
     protected function readSessionData(string $sessionId): ?string
@@ -50,8 +50,9 @@ trait SessionIdValidationTrait
             return $this->redisClient->get($this->keyBuilder->buildSessionKey($sessionId));
         }
 
-        $sessionData = $this->prefetchedSessionDataBySessionId[$sessionId];
-        unset($this->prefetchedSessionDataBySessionId[$sessionId]);
+        $sessionData = $this->prefetchedSessionData;
+        $this->prefetchedSessionId = null;
+        $this->prefetchedSessionData = null;
 
         return $sessionData;
     }
